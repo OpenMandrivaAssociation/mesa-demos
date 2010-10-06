@@ -47,7 +47,7 @@ Provides:	hackMesa-demos = %{version}
 Obsoletes:	hackMesa-demos <= %{version}
 Obsoletes: 	Mesa-demos < 6.4
 Provides:	Mesa-demos = %{version}-%{release}
-Requires:	glxinfo = %{version}-%{release}
+Requires:	glxinfo = %{version}
 
 %package -n	glxinfo
 Summary:	Commandline GLX information tool
