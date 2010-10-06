@@ -10,7 +10,7 @@
 
 Name:		mesa-demos
 Version: 	8.0.1
-Release: 	%mkrel 1
+Release: 	%mkrel 2
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 
@@ -81,10 +81,6 @@ popd
 
 
 %build
-
-# Required by patch200:
-#autoreconf -vfi
-
 LIB_DIR=%{_lib}
 INCLUDE_DIR=$RPM_BUILD_ROOT%{_includedir}
 export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
@@ -101,7 +97,8 @@ make DESTDIR=$RPM_BUILD_ROOT install
 
 # (fg) So that demos at least work :)
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/mesa-demos-data
-cp -v src/images/*rgb src/demos/isosurf.dat %{buildroot}/%{_libdir}/mesa-demos-data
+cp -v src/images/*rgb src/demos/*.dat %{buildroot}/%{_libdir}/mesa-demos-data
+cp -a src/glsl/CH0* %{buildroot}/%{_libdir}/mesa-demos-data
 
 # (tv) fix conflict with ncurses:
 # (only happens not in iurt's chroot => we may miss some BRs...)
