@@ -100,7 +100,8 @@ mkdir -p $RPM_BUILD_ROOT%{_libdir}/mesa-demos-data
 cp -v src/images/*rgb src/demos/isosurf.dat %{buildroot}/%{_libdir}/mesa-demos-data
 
 # (tv) fix conflict with ncurses:
-mv %{buildroot}/%{_bindir}/clear{,-gl}
+# (only happens not in iurt's chroot => we may miss some BRs...)
+[[ -f %{buildroot}/%{_bindir}/clear ]] && mv %{buildroot}/%{_bindir}/clear{,-gl}
 
 # icons for three demos examples [we lack a frontend
 # to launch the demos obviously]
