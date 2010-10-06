@@ -68,7 +68,7 @@ This package contains the glinfo & glxinfo GLX information utility.
 %setup -q -n %{name}-%{version}
 
 perl -pi -e "s|\.\./images/|%{_libdir}/mesa-demos-data/|" src/*/*.c
-perl -pi -e "s,\"(.*?)\.(vert|geom|frag)\",\"%{_libdir}/mesa-demos-data/\$1.\$2\",g" src/*/*.c
+perl -pi -e "s,\"(.*?)\.(dat|vert|geom|frag)\",\"%{_libdir}/mesa-demos-data/\$1.\$2\",g" src/*/*.c
 perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" src/*/isosurf.c 
 
 
