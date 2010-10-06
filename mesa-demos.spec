@@ -86,9 +86,7 @@ INCLUDE_DIR=$RPM_BUILD_ROOT%{_includedir}
 export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
 
 %configure2_5x	
-
-# (cg) Parallel build breaks the dricore shared stuff.
-make -j 1
+%make
 
 %install
 rm -rf %{buildroot}
