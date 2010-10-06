@@ -10,7 +10,7 @@
 
 Name:		mesa-demos
 Version: 	8.0.1
-Release: 	%mkrel 3
+Release: 	%mkrel 4
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 
@@ -92,6 +92,9 @@ cp -a src/glsl/CH0* src/*/*.{frag,vert,geom} %{buildroot}/%{_libdir}/mesa-demos-
 
 # (tv) fix conflict with ncurses:
 mv %{buildroot}/%{_bindir}/clear{,-gl}
+
+# (tv) fix conflict with bitmap:
+mv %{buildroot}/%{_bindir}/bitmap{,-gl}
 
 # icons for three demos examples [we lack a frontend
 # to launch the demos obviously]
