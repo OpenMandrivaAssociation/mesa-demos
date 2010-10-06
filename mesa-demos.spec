@@ -10,7 +10,7 @@
 
 Name:		mesa-demos
 Version: 	8.0.1
-Release: 	%mkrel 2
+Release: 	%mkrel 3
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 
@@ -67,17 +67,9 @@ This package contains the glinfo & glxinfo GLX information utility.
 %prep
 %setup -q -n %{name}-%{version}
 
-pushd src/demos
-	for i in *.c; do 
-	perl -pi -e "s|\.\./images/|%{_libdir}/mesa-demos-data/|" $i ; 
-	done 
-	perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" isosurf.c 
-popd
-pushd src/xdemos
-	for i in *.c; do 
-	perl -pi -e "s|\.\./images/|%{_libdir}/mesa-demos-data/|" $i ; 
-	done 
-popd
+perl -pi -e "s|\.\./images/|%{_libdir}/mesa-demos-data/|" src/*/*.c
+perl -pi -e "s,\"(.*?)\.(vert|geom|frag)\",\"%{_libdir}/mesa-demos-data/\$1.\$2\",g" src/*/*.c
+perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" src/*/isosurf.c 
 
 
 %build
@@ -95,8 +87,8 @@ make DESTDIR=$RPM_BUILD_ROOT install
 
 # (fg) So that demos at least work :)
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/mesa-demos-data
-cp -v src/images/*rgb src/demos/*.dat %{buildroot}/%{_libdir}/mesa-demos-data
-cp -a src/glsl/CH0* %{buildroot}/%{_libdir}/mesa-demos-data
+cp -v src/images/*rgb{a,} src/demos/*.dat %{buildroot}/%{_libdir}/mesa-demos-data
+cp -a src/glsl/CH0* src/*/*.{frag,vert,geom} %{buildroot}/%{_libdir}/mesa-demos-data
 
 # (tv) fix conflict with ncurses:
 # (only happens not in iurt's chroot => we may miss some BRs...)
