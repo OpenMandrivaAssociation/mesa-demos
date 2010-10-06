@@ -32,6 +32,10 @@ BuildRequires:	libxxf86vm-devel	>= 1.1.0
 BuildRequires:	libxi-devel		>= 1.3
 
 BuildRequires:	libglew-devel
+
+# (tv) for glinfo:
+BuildRequires:	mesaglut-devel
+
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.mesa3d.org
 Source0:	ftp://ftp://ftp.freedesktop.org/pub/mesa/demos/%version/%name-%{version}.%{src_type}
