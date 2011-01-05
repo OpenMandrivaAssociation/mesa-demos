@@ -69,7 +69,7 @@ This package contains the glinfo & glxinfo GLX information utility.
 
 perl -pi -e "s|\.\./images/|%{_libdir}/mesa-demos-data/|" src/*/*.c
 perl -pi -e "s,\"(.*?)\.(dat|vert|geom|frag)\",\"%{_libdir}/mesa-demos-data/\$1.\$2\",g" src/*/*.c
-perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" src/*/isosurf.c 
+perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" src/*/isosurf.c
 
 
 %build
@@ -77,13 +77,12 @@ LIB_DIR=%{_lib}
 INCLUDE_DIR=$RPM_BUILD_ROOT%{_includedir}
 export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
 
-%configure2_5x	
+%configure2_5x
 %make
 
 %install
 rm -rf %{buildroot}
-make DESTDIR=$RPM_BUILD_ROOT install
-%makeinstall
+%makeinstall_std
 
 # (fg) So that demos at least work :)
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/mesa-demos-data
@@ -122,6 +121,4 @@ rm -fr $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %{_bindir}/glxinfo
 %{_bindir}/glinfo
-
-
 
