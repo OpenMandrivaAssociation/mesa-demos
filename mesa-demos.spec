@@ -1,16 +1,6 @@
-# (cg) Cheater...
-%define Werror_cflags %nil
-
-# (aco) Needed for the dri drivers
-%define _disable_ld_no_undefined 1
-
-%define src_type tar.bz2
-
-%define makedepend		%{_bindir}/gccmakedep
-
 Name:		mesa-demos
 Version: 	8.0.1
-Release: 	%mkrel 4
+Release: 	%mkrel 5
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 
@@ -38,8 +28,10 @@ BuildRequires:	mesaglut-devel
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.mesa3d.org
-Source0:	ftp://ftp://ftp.freedesktop.org/pub/mesa/demos/%version/%name-%{version}.%{src_type}
+Source0:	ftp://ftp://ftp.freedesktop.org/pub/mesa/demos/%version/%name-%{version}.tar.bz2
 Source4:	Mesa-icons.tar.bz2
+
+Patch0:		0001-es1_info-convert-indentString-into-a-literal-string.patch
 
 License:	MIT
 
@@ -66,6 +58,7 @@ This package contains the glinfo & glxinfo GLX information utility.
 
 %prep
 %setup -q -n %{name}-%{version}
+%apply_patches
 
 perl -pi -e "s|\.\./images/|%{_libdir}/mesa-demos-data/|" src/*/*.c
 perl -pi -e "s,\"(.*?)\.(dat|vert|geom|frag)\",\"%{_libdir}/mesa-demos-data/\$1.\$2\",g" src/*/*.c
