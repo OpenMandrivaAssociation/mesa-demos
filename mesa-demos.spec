@@ -4,27 +4,12 @@ Release: 	%mkrel 5
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 
-# (tv) BR probably need to be shrinked:
-BuildRequires:	tcl
-BuildRequires:	texinfo
-BuildRequires:	libxfixes-devel		>= 4.0.3
-BuildRequires:	libxt-devel		>= 1.0.5
-BuildRequires:	libxmu-devel		>= 1.0.3
-BuildRequires:	libx11-devel		>= 1.3.3
-BuildRequires:	libxdamage-devel	>= 1.1.1
-BuildRequires:	libexpat-devel		>= 2.0.1
-BuildRequires:	gccmakedep
-BuildRequires:	x11-proto-devel		>= 7.3
-BuildRequires:	libdrm-devel		>= 2.4.19-3
+BuildRequires: libmesagl-devel
+BuildRequires: libglew-devel
+BuildRequires: libmesaglu-devel
 
-BuildRequires:	libxext-devel		>= 1.1.1
-BuildRequires:	libxxf86vm-devel	>= 1.1.0
-BuildRequires:	libxi-devel		>= 1.3
-
-BuildRequires:	libglew-devel
-
-# (tv) for glinfo:
-BuildRequires:	mesaglut-devel
+# Not essential, but builds more demos:
+BuildRequires: libmesaglut-devel
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.mesa3d.org
@@ -67,7 +52,7 @@ perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" src/*/isosur
 
 %build
 LIB_DIR=%{_lib}
-INCLUDE_DIR=$RPM_BUILD_ROOT%{_includedir}
+INCLUDE_DIR=%{buildroot}/%{_includedir}
 export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
 
 %configure2_5x
@@ -78,7 +63,7 @@ rm -rf %{buildroot}
 %makeinstall_std
 
 # (fg) So that demos at least work :)
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/mesa-demos-data
+mkdir -p %{buildroot}/%{_libdir}/mesa-demos-data
 cp -v src/images/*rgb{a,} src/demos/*.dat %{buildroot}/%{_libdir}/mesa-demos-data
 cp -a src/glsl/CH0* src/*/*.{frag,vert,geom} %{buildroot}/%{_libdir}/mesa-demos-data
 
@@ -90,13 +75,13 @@ mv %{buildroot}/%{_bindir}/bitmap{,-gl}
 
 # icons for three demos examples [we lack a frontend
 # to launch the demos obviously]
-install -m 755 -d $RPM_BUILD_ROOT%{_miconsdir}
-install -m 755 -d $RPM_BUILD_ROOT%{_iconsdir}
-install -m 755 -d $RPM_BUILD_ROOT%{_liconsdir}
-tar jxvf %{SOURCE4} -C $RPM_BUILD_ROOT%{_iconsdir}
+install -m 755 -d %{buildroot}/%{_miconsdir}
+install -m 755 -d %{buildroot}/%{_iconsdir}
+install -m 755 -d %{buildroot}/%{_liconsdir}
+tar jxvf %{SOURCE4} -C %{buildroot}/%{_iconsdir}
 
 %clean
-rm -fr $RPM_BUILD_ROOT
+rm -fr %{buildroot}
 
 
 %files
