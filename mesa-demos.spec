@@ -1,6 +1,6 @@
 Name:		mesa-demos
 Version: 	8.0.1
-Release: 	%mkrel 5
+Release: 	%mkrel 6
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 
