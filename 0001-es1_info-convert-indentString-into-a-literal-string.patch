@@ -1,0 +1,37 @@
+From bb61f0bcbbbb5a663456b4c107b498366cb262b3 Mon Sep 17 00:00:00 2001
+From: Paulo Zanoni <pzanoni@mandriva.com>
+Date: Thu, 6 Jan 2011 10:40:57 -0200
+Subject: [PATCH mesa-demos 1/6] es1_info: convert indentString into a literal string
+---
+ src/egl/opengles1/es1_info.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/egl/opengles1/es1_info.c b/src/egl/opengles1/es1_info.c
+index 93816b5..38becc5 100644
+--- a/src/egl/opengles1/es1_info.c
++++ b/src/egl/opengles1/es1_info.c
+@@ -29,7 +29,7 @@
+ static void
+ print_extension_list(const char *ext)
+ {
+-   const char *indentString = "    ";
++   const char indentString[] = "    ";
+    const int indent = 4;
+    const int max = 79;
+    int width, i, j;
+diff --git a/src/egl/opengles2/es2_info.c b/src/egl/opengles2/es2_info.c
+index 93816b5..38becc5 100644
+--- a/src/egl/opengles2/es2_info.c
++++ b/src/egl/opengles2/es2_info.c
+@@ -29,7 +29,7 @@
+ static void
+ print_extension_list(const char *ext)
+ {
+-   const char *indentString = "    ";
++   const char indentString[] = "    ";
+    const int indent = 4;
+    const int max = 79;
+    int width, i, j;
+-- 
+1.7.1
+
