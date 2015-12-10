@@ -1,6 +1,6 @@
 Name:		mesa-demos
-Version:	8.2.0
-Release:	5
+Version:	8.3.0
+Release:	1
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
@@ -13,7 +13,7 @@ BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glew)
 # Not essential, but builds more demos:
 BuildRequires:	pkgconfig(glut)
-
+BuildRequires:	pkgconfig(egl)
 Requires:	glxinfo = %{version}
 
 %package -n	glxinfo
@@ -45,9 +45,8 @@ INCLUDE_DIR=%{buildroot}/%{_includedir}
 export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
 
 %configure \
-		--with-system-data-files \
-		--disable-egl
-        
+    --with-system-data-files
+
 %make
 
 %install
