@@ -1,6 +1,6 @@
 Name:		mesa-demos
-Version: 	8.2.0
-Release: 	4
+Version:	8.2.0
+Release:	5
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
@@ -44,7 +44,10 @@ LIB_DIR=%{_lib}
 INCLUDE_DIR=%{buildroot}/%{_includedir}
 export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
 
-%configure2_5x
+%configure \
+		--with-system-data-files \
+		--disable-egl
+        
 %make
 
 %install
