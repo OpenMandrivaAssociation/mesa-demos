@@ -1,6 +1,6 @@
 Name:		mesa-demos
 Version:	8.3.0
-Release:	2
+Release:	3
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
