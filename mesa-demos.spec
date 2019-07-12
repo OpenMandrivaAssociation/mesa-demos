@@ -1,43 +1,46 @@
 Name:		mesa-demos
 Version:	8.4.0
-Release:	1
+Release:	2
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
 URL:		http://www.mesa3d.org
 Source0:	ftp://ftp.freedesktop.org/pub/mesa/demos/%{name}-%{version}.tar.bz2
 Source4:	Mesa-icons.tar.bz2
-
+# Fix xdriinfo not working with libglvnd
+Patch2:		xdriinfo-1.0.4-glvnd.patch
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glew)
 # Not essential, but builds more demos:
 BuildRequires:	pkgconfig(glut)
 BuildRequires:	pkgconfig(egl)
+BuildRequires:	pkgconfig(gbm)
+BuildRequires:	pkgconfig(freetype2)
+BuildRequires:	pkgconfig(wayland-server)
 Requires:	glxinfo = %{version}
-
-%package -n	glxinfo
-Summary:	Commandline GLX information tool
-Group:		Graphics
-Conflicts:	mesa-demos < 7.7-4
 
 %description
 Mesa is an OpenGL 2.1 compatible 3D graphics library.
 
 This package contains some demo programs for the Mesa library.
 
-%description -n	glxinfo
+%package -n glxinfo
+Summary:	Commandline GLX information tool
+Group:		Graphics
+Conflicts:	mesa-demos < 7.7-4
+
+%description -n glxinfo
 Mesa is an OpenGL 2.1 compatible 3D graphics library.
 
 This package contains the glinfo & glxinfo GLX information utility.
 
 %prep
-%setup -q
+%autosetup -p1
 
 perl -pi -e "s|\.\./images/|%{_libdir}/mesa-demos-data/|" src/*/*.c
 perl -pi -e "s,\"(.*?)\.(dat|vert|geom|frag)\",\"%{_libdir}/mesa-demos-data/\$1.\$2\",g" src/*/*.c
 perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" src/*/isosurf.c
-
 
 %build
 LIB_DIR=%{_lib}
@@ -47,10 +50,10 @@ export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
 %configure \
     --with-system-data-files
 
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 # (fg) So that demos at least work :)
 mkdir -p %{buildroot}%{_libdir}/mesa-demos-data
