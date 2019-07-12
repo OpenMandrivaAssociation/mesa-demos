@@ -18,6 +18,8 @@ BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(gbm)
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(wayland-server)
+BuildRequires:	pkgconfig(glesv2)
+BuildRequires:	openvg-devel
 Requires:	glxinfo = %{version}
 
 %description
