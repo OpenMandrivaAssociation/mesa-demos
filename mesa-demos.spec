@@ -7,8 +7,6 @@ License:	MIT
 URL:		http://www.mesa3d.org
 Source0:	ftp://ftp.freedesktop.org/pub/mesa/demos/%{name}-%{version}.tar.bz2
 Source4:	Mesa-icons.tar.bz2
-# Fix xdriinfo not working with libglvnd
-Patch2:		xdriinfo-1.0.4-glvnd.patch
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glew)
