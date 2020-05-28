@@ -55,7 +55,7 @@ export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
     --with-system-data-files \
     --disable-gles1
 
-%make_build -j1 V=1
+%make_build
 
 %install
 %make_install
