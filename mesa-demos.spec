@@ -8,6 +8,7 @@ URL:		http://www.mesa3d.org
 Source0:	ftp://ftp.freedesktop.org/pub/mesa/demos/%{name}-%{version}.tar.bz2
 Source4:	Mesa-icons.tar.bz2
 BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(libdrm)
 BuildRequires:	pkgconfig(osmesa)
 BuildRequires:	pkgconfig(gl)
