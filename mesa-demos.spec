@@ -48,7 +48,8 @@ INCLUDE_DIR=%{buildroot}/%{_includedir}
 export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
 
 %configure \
-    --with-system-data-files
+    --with-system-data-files \
+    --disable-gles1
 
 %make_build -j1 V=1
 
