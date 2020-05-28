@@ -50,7 +50,7 @@ export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
 %configure \
     --with-system-data-files
 
-%make_build
+%make_build -j1 V=1
 
 %install
 %make_install
