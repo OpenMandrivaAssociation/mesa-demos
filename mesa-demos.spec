@@ -7,6 +7,9 @@ License:	MIT
 URL:		http://www.mesa3d.org
 Source0:	ftp://ftp.freedesktop.org/pub/mesa/demos/%{name}-%{version}.tar.bz2
 Source4:	Mesa-icons.tar.bz2
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(drm)
+BuildRequires:	pkgconfig(osmesa)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glew)
@@ -48,8 +51,7 @@ INCLUDE_DIR=%{buildroot}/%{_includedir}
 export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
 
 %configure \
-    --with-system-data-files \
-    --disable-gles1
+    --with-system-data-files
 
 %make_build -j1 V=1
 
