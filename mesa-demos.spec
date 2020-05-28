@@ -1,12 +1,16 @@
 Name:		mesa-demos
 Version:	8.4.0
-Release:	2
+Release:	3
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
 URL:		http://www.mesa3d.org
 Source0:	ftp://ftp.freedesktop.org/pub/mesa/demos/%{name}-%{version}.tar.bz2
 Source4:	Mesa-icons.tar.bz2
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xext)
+BuildRequires:	pkgconfig(libdrm)
+BuildRequires:	pkgconfig(osmesa)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glew)
@@ -48,7 +52,8 @@ INCLUDE_DIR=%{buildroot}/%{_includedir}
 export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
 
 %configure \
-    --with-system-data-files
+    --with-system-data-files \
+    --disable-gles1
 
 %make_build
 
