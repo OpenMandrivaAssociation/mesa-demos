@@ -1,6 +1,12 @@
+%ifarch %{x86_64}
+# 32-bit compat glxinfo can be very useful for debugging
+# graphics issues with 32-bit applications...
+%bcond_without compat32
+%endif
+
 Name:		mesa-demos
 Version:	8.4.0
-Release:	3
+Release:	4
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
@@ -23,11 +29,34 @@ BuildRequires:	pkgconfig(wayland-server)
 BuildRequires:	pkgconfig(glesv2)
 BuildRequires:	openvg-devel
 Requires:	glxinfo = %{version}
+%if %{with compat32}
+BuildRequires:	devel(libX11)
+BuildRequires:	devel(libXext)
+BuildRequires:	devel(libdrm)
+BuildRequires:	devel(libGL)
+BuildRequires:	devel(libGLU)
+BuildRequires:	devel(libGLdispatch)
+BuildRequires:	devel(libGLX)
+BuildRequires:	devel(libxcb)
+BuildRequires:	devel(libXau)
+BuildRequires:	devel(libXdmcp)
+BuildRequires:	devel(libbsd)
+%endif
 
 %description
 Mesa is an OpenGL 2.1 compatible 3D graphics library.
 
 This package contains some demo programs for the Mesa library.
+
+%package 32
+Summary:	32-bit versions of Mesa demos
+Group:		Graphics
+
+%description 32
+Mesa is an OpenGL 2.1 compatible 3D graphics library.
+
+This package contains 32-bit versions of some demo programs
+for the Mesa library.
 
 %package -n glxinfo
 Summary:	Commandline GLX information tool
@@ -39,6 +68,17 @@ Mesa is an OpenGL 2.1 compatible 3D graphics library.
 
 This package contains the glinfo & glxinfo GLX information utility.
 
+%package -n glxinfo32
+Summary:	Commandline GLX information tool (32-bit)
+Group:		Graphics
+Conflicts:	mesa-demos < 7.7-4
+
+%description -n glxinfo32
+Mesa is an OpenGL 2.1 compatible 3D graphics library.
+
+This package contains 32-bit versions of the glinfo & glxinfo GLX
+information utility.
+
 %prep
 %autosetup -p1
 
@@ -49,16 +89,36 @@ perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" src/*/isosur
 %build
 LIB_DIR=%{_lib}
 INCLUDE_DIR=%{buildroot}/%{_includedir}
-export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR
+CONFIGURE_TOP="$(pwd)"
+export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR CONFIGURE_TOP
 
+mkdir build
+cd build
 %configure \
-    --with-system-data-files \
-    --disable-gles1
-
+	--with-system-data-files \
+	--disable-gles1
 %make_build
 
+%if %{with compat32}
+cd ..
+mkdir build32
+cd build32
+%configure32 \
+	--with-system-data-files \
+	--disable-gles1
+%make_build
+%endif
+
 %install
-%make_install
+%if %{with compat32}
+%make_install -C build32
+cd %{buildroot}%{_bindir}
+for i in *; do
+	mv $i ${i}32
+done
+cd -
+%endif
+%make_install -C build
 
 # (fg) So that demos at least work :)
 mkdir -p %{buildroot}%{_libdir}/mesa-demos-data
@@ -77,6 +137,9 @@ tar jxvf %{SOURCE4} -C %{buildroot}%{_iconsdir}
 
 %files
 %{_bindir}/*
+%if %{with compat32}
+%exclude %{_bindir}/*32
+%endif
 %exclude %{_bindir}/glxinfo
 %exclude %{_bindir}/glinfo
 %dir %{_datadir}/mesa-demos
@@ -90,3 +153,14 @@ tar jxvf %{SOURCE4} -C %{buildroot}%{_iconsdir}
 %files -n glxinfo
 %{_bindir}/glxinfo
 %{_bindir}/glinfo
+
+%if %{with compat32}
+%files 32
+%exclude %{_bindir}/glxinfo32
+%exclude %{_bindir}/glinfo32
+%{_bindir}/*32
+
+%files -n glxinfo32
+%{_bindir}/glxinfo32
+%{_bindir}/glinfo32
+%endif
