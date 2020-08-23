@@ -42,6 +42,7 @@ BuildRequires:	devel(libXau)
 BuildRequires:	devel(libXdmcp)
 BuildRequires:	devel(libbsd)
 BuildRequires:	devel(libGLEW)
+BuildRequires:	devel(libglut)
 %endif
 
 %description
