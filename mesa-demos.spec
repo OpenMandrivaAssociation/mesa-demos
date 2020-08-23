@@ -41,6 +41,7 @@ BuildRequires:	devel(libxcb)
 BuildRequires:	devel(libXau)
 BuildRequires:	devel(libXdmcp)
 BuildRequires:	devel(libbsd)
+BuildRequires:	devel(libGLEW)
 %endif
 
 %description
