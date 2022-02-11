@@ -6,7 +6,7 @@
 
 Name:		mesa-demos
 Version:	8.4.0
-Release:	4
+Release:	5
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
@@ -29,6 +29,7 @@ BuildRequires:	pkgconfig(wayland-server)
 BuildRequires:	pkgconfig(glesv2)
 BuildRequires:	openvg-devel
 Requires:	glxinfo = %{version}
+Requires:	eglinfo = %{version}
 %if %{with compat32}
 BuildRequires:	devel(libX11)
 BuildRequires:	devel(libXext)
@@ -81,6 +82,26 @@ Mesa is an OpenGL 2.1 compatible 3D graphics library.
 This package contains 32-bit versions of the glinfo & glxinfo GLX
 information utility.
 
+%package -n eglinfo
+Summary:	Commandline EGL information tool
+Group:		Graphics
+Conflicts:	mesa-demos < 8.4.0-5
+
+%description -n eglinfo
+Mesa is an OpenGL 2.1 compatible 3D graphics library.
+
+This package contains the eglinfo information utility.
+
+%package -n eglinfo32
+Summary:	Commandline EGL information tool (32-bit)
+Group:		Graphics
+Conflicts:	mesa-demos < 8.4.0-5
+
+%description -n eglinfo32
+Mesa is an OpenGL 2.1 compatible 3D graphics library.
+
+This package contains 32-bit version of eglinfo information utility.
+
 %prep
 %autosetup -p1
 
@@ -116,7 +137,7 @@ cd build32
 %make_install -C build32
 cd %{buildroot}%{_bindir}
 for i in *; do
-	mv $i ${i}32
+    mv $i ${i}32
 done
 cd -
 %endif
@@ -156,6 +177,9 @@ tar jxvf %{SOURCE4} -C %{buildroot}%{_iconsdir}
 %{_bindir}/glxinfo
 %{_bindir}/glinfo
 
+%files -n eglinfo
+%{_bindir}/eglinfo
+
 %if %{with compat32}
 %files 32
 %exclude %{_bindir}/glxinfo32
@@ -165,4 +189,7 @@ tar jxvf %{SOURCE4} -C %{buildroot}%{_iconsdir}
 %files -n glxinfo32
 %{_bindir}/glxinfo32
 %{_bindir}/glinfo32
+
+%files -n eglinfo32
+%{_bindir}/eglinfo32
 %endif
