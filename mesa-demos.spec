@@ -5,14 +5,15 @@
 %endif
 
 Name:		mesa-demos
-Version:	8.4.0
-Release:	5
+Version:	8.5.0
+Release:	1
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
 URL:		http://www.mesa3d.org
 Source0:	ftp://ftp.freedesktop.org/pub/mesa/demos/%{name}-%{version}.tar.bz2
 Source4:	Mesa-icons.tar.bz2
+BuildRequires:	meson
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(libdrm)
@@ -26,6 +27,7 @@ BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(gbm)
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(wayland-server)
+BuildRequires:	pkgconfig(wayland-protocols)
 BuildRequires:	pkgconfig(glesv2)
 BuildRequires:	openvg-devel
 Requires:	glxinfo = %{version}
@@ -44,6 +46,9 @@ BuildRequires:	devel(libXdmcp)
 BuildRequires:	devel(libbsd)
 BuildRequires:	devel(libGLEW)
 BuildRequires:	devel(libglut)
+BuildRequires:	devel(libOSMesa)
+BuildRequires:	devel(libwayland-server)
+BuildRequires:	devel(libffi)
 %endif
 
 %description
@@ -109,39 +114,32 @@ perl -pi -e "s|\.\./images/|%{_libdir}/mesa-demos-data/|" src/*/*.c
 perl -pi -e "s,\"(.*?)\.(dat|vert|geom|frag)\",\"%{_libdir}/mesa-demos-data/\$1.\$2\",g" src/*/*.c
 perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" src/*/isosurf.c
 
-%build
-LIB_DIR=%{_lib}
-INCLUDE_DIR=%{buildroot}/%{_includedir}
-CONFIGURE_TOP="$(pwd)"
-export LIB_DIR INCLUDE_DIR DRI_DRIVER_DIR CONFIGURE_TOP
-
-mkdir build
-cd build
-%configure \
-	--with-system-data-files \
-	--disable-gles1
-%make_build
-
 %if %{with compat32}
-cd ..
-mkdir build32
-cd build32
-%configure32 \
-	--with-system-data-files \
-	--disable-gles1
-%make_build
+%meson32 \
+	-Dgles1=disabled \
+	-Dwith-system-data-files=true
 %endif
+
+%meson \
+	-Dgles1=disabled \
+	-Dwith-system-data-files=true
+
+%build
+%if %{with compat32}
+%ninja_build -C build32
+%endif
+%meson_build
 
 %install
 %if %{with compat32}
-%make_install -C build32
-cd %{buildroot}%{_bindir}
-for i in *; do
-    mv $i ${i}32
+%ninja_install -C build32
+for i in $(ls -1 %{buildroot}%{_bindir}); do
+    mv %{buildroot}%{_bindir}/"$i" %{buildroot}%{_bindir}/"$i"32
 done
-cd -
 %endif
-%make_install -C build
+%meson_install
+
+install -m 0755 build/src/egl/opengl/{eglgears_wayland,eglgears_x11,eglkms,egltri_wayland,egltri_x11,peglgears,xeglgears,xeglthreads} %{buildroot}%{_bindir}
 
 # (fg) So that demos at least work :)
 mkdir -p %{buildroot}%{_libdir}/mesa-demos-data
