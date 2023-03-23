@@ -5,13 +5,13 @@
 %endif
 
 Name:		mesa-demos
-Version:	8.5.0
+Version:	9.0.0
 Release:	1
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
 URL:		http://www.mesa3d.org
-Source0:	ftp://ftp.freedesktop.org/pub/mesa/demos/%{name}-%{version}.tar.bz2
+Source0:	https://gitlab.freedesktop.org/mesa/demos/-/archive/mesa-demos-%{version}/demos-mesa-demos-%{version}.tar.bz2
 Source4:	Mesa-icons.tar.bz2
 BuildRequires:	meson
 BuildRequires:	pkgconfig(x11)
@@ -29,6 +29,7 @@ BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(wayland-server)
 BuildRequires:	pkgconfig(wayland-protocols)
 BuildRequires:	pkgconfig(glesv2)
+BuildRequires:	pkgconfig(libdecor-0)
 BuildRequires:	openvg-devel
 Requires:	glxinfo = %{version}
 Requires:	eglinfo = %{version}
@@ -41,6 +42,8 @@ BuildRequires:	devel(libGLU)
 BuildRequires:	devel(libGLdispatch)
 BuildRequires:	devel(libGLX)
 BuildRequires:	devel(libxcb)
+BuildRequires:	devel(libxkbcommon)
+BuildRequires:	devel(libxkbcommon-x11)
 BuildRequires:	devel(libXau)
 BuildRequires:	devel(libXdmcp)
 BuildRequires:	devel(libbsd)
@@ -108,7 +111,7 @@ Mesa is an OpenGL 2.1 compatible 3D graphics library.
 This package contains 32-bit version of eglinfo information utility.
 
 %prep
-%autosetup -p1
+%autosetup -p1 -n demos-mesa-demos-%{version}
 
 perl -pi -e "s|\.\./images/|%{_libdir}/mesa-demos-data/|" src/*/*.c
 perl -pi -e "s,\"(.*?)\.(dat|vert|geom|frag)\",\"%{_libdir}/mesa-demos-data/\$1.\$2\",g" src/*/*.c
@@ -117,7 +120,8 @@ perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" src/*/isosur
 %if %{with compat32}
 %meson32 \
 	-Dgles1=disabled \
-	-Dwith-system-data-files=true
+	-Dwith-system-data-files=true \
+	-Dwayland=disabled
 %endif
 
 %meson \
