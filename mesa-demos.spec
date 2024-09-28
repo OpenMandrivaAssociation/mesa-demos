@@ -6,11 +6,11 @@
 
 Name:		mesa-demos
 Version:	9.0.0
-Release:	2
+Release:	1
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
-URL:		http://www.mesa3d.org
+URL:		https://www.mesa3d.org
 Source0:	https://gitlab.freedesktop.org/mesa/demos/-/archive/mesa-demos-%{version}/demos-mesa-demos-%{version}.tar.bz2
 Source4:	Mesa-icons.tar.bz2
 BuildRequires:	meson
@@ -28,6 +28,7 @@ BuildRequires:	pkgconfig(gbm)
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(wayland-server)
 BuildRequires:	pkgconfig(wayland-protocols)
+BuildRequires:  pkgconfig(vulkan)
 BuildRequires:	pkgconfig(glesv2)
 BuildRequires:	pkgconfig(libdecor-0)
 BuildRequires:	openvg-devel
