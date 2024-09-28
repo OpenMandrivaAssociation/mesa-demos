@@ -27,11 +27,14 @@ BuildRequires:	pkgconfig(glut)
 BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(gbm)
 BuildRequires:	pkgconfig(freetype2)
+BuildRequires:	pkgconfig(wayland-client)
+BuildRequires:	pkgconfig(wayland-egl)
 BuildRequires:	pkgconfig(wayland-server)
 BuildRequires:	pkgconfig(wayland-protocols)
 BuildRequires:  pkgconfig(vulkan)
 BuildRequires:	pkgconfig(glesv2)
 BuildRequires:	pkgconfig(libdecor-0)
+BuildRequires:	pkgconfig(xkbcommon-x11)
 BuildRequires:	openvg-devel
 Requires:	glxinfo = %{version}
 Requires:	eglinfo = %{version}
