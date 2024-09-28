@@ -53,6 +53,7 @@ BuildRequires:	devel(libglut)
 BuildRequires:	devel(libOSMesa)
 BuildRequires:	devel(libwayland-server)
 BuildRequires:	devel(libffi)
+BuildRequires:  devel(libvulkan)
 %endif
 
 %description
