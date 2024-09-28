@@ -14,6 +14,7 @@ URL:		https://www.mesa3d.org
 Source0:	https://gitlab.freedesktop.org/mesa/demos/-/archive/mesa-demos-%{version}/demos-mesa-demos-%{version}.tar.bz2
 Source4:	Mesa-icons.tar.bz2
 BuildRequires:	meson
+BuildRequires:	glslang
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(libdrm)
