@@ -6,7 +6,7 @@
 
 Name:		mesa-demos
 Version:	9.0.0
-Release:	1
+Release:	2
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
@@ -18,7 +18,7 @@ BuildRequires:	glslang
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(libdrm)
-BuildRequires:	pkgconfig(osmesa)
+#BuildRequires:	pkgconfig(osmesa)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glew)
