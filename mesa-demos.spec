@@ -127,12 +127,14 @@ perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" src/*/isosur
 %meson32 \
 	-Dgles1=disabled \
 	-Dwith-system-data-files=true \
-	-Dwayland=disabled
+	-Dwayland=disabled \
+ 	-Dosmesa=disabled
 %endif
 
 %meson \
 	-Dgles1=disabled \
-	-Dwith-system-data-files=true
+	-Dwith-system-data-files=true \
+ 	-Dosmesa=disabled
 
 %build
 %if %{with compat32}
