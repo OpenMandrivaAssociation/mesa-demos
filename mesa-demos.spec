@@ -6,7 +6,7 @@
 
 Name:		mesa-demos
 Version:	9.0.0
-Release:	1
+Release:	2
 Summary:	Demos for Mesa (OpenGL compatible 3D lib)
 Group:		Graphics
 License:	MIT
@@ -18,7 +18,7 @@ BuildRequires:	glslang
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(libdrm)
-BuildRequires:	pkgconfig(osmesa)
+#BuildRequires:	pkgconfig(osmesa)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glew)
@@ -54,7 +54,7 @@ BuildRequires:	devel(libXdmcp)
 BuildRequires:	devel(libbsd)
 BuildRequires:	devel(libGLEW)
 BuildRequires:	devel(libglut)
-BuildRequires:	devel(libOSMesa)
+#BuildRequires:	devel(libOSMesa)
 BuildRequires:	devel(libwayland-server)
 BuildRequires:	devel(libffi)
 BuildRequires:  devel(libvulkan)
@@ -127,12 +127,14 @@ perl -pi -e "s|isosurf.dat|%{_libdir}/mesa-demos-data/isosurf.dat|" src/*/isosur
 %meson32 \
 	-Dgles1=disabled \
 	-Dwith-system-data-files=true \
-	-Dwayland=disabled
+	-Dwayland=disabled \
+ 	-Dosmesa=disabled
 %endif
 
 %meson \
 	-Dgles1=disabled \
-	-Dwith-system-data-files=true
+	-Dwith-system-data-files=true \
+ 	-Dosmesa=disabled
 
 %build
 %if %{with compat32}
